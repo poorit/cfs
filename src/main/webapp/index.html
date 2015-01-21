@@ -3,30 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="./css/common.css">
+<link  href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.3/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.3/fotorama.js"></script> <!-- 16 KB -->
+
+<script type = "text/javascript" src = "./js/bootstrap.min.js"></script>
+
 <style>
 .wrap {
 	width: 100%;
 	height: 100%;
 	margin: 0 auto;
-	background-color: gray;
+	background-color:#ebfbff;
 }
 .container{
+  float:left
   width:70%;
-  height:800px;
+  height:768px;
   margin:0 auto;
-  background-color:white;
 }
+.main_top{
+  width:100%;
+  height:40%;
+  margin:0 auto;
+  background-color:#222222;
+}
+.main_bottom{
+  width:100%;
+  height:60%;
+  margin:0 auto;
+  background-color:#3c467d;
+}
+</style>
+<style type="text/css">
+  .layer {display:none; position:fixed; _position:absolute; top:0; left:0; width:100%; height:100%; z-index:100;}
+  .layer .bg {position:absolute; top:0; left:0; width:100%; height:100%; background:#000; opacity:.5; filter:alpha(opacity=50);}
+  .layer .pop-layer {display:block;}
+
+  .pop-layer {display:none; position: absolute; top: 50%; left: 50%; width: 410px; height:auto;  background-color:#fff; border: 3px solid #444444; z-index: 10;}  
+  .pop-layer .pop-container {padding: 20px 25px;}
+  .pop-layer p.ctxt {color: #666; line-height: 25px;}
+  .pop-layer .btn-r {width: 100%; margin:10px 0 20px; padding-top: 10px; border-top: 1px solid #DDD; text-align:right;}
+
+  .main_menu {
+    width:50%;
+    height:100%;
+    margin:0 auto;
+    padding-top:100px;
+  }
+  .main_menu span {
+    padding:10px;
+    margin:0 auto;
+
+  }
 </style>
 </head>
 <body>
 	<div class="wrap">
 	 <div class="container">
-	  <div class="">
+	  <div class="main_top">
+	  </div>
+	  <div class="main_bottom">
+		  <div class="main_menu">
+			  <span><a href="#" class="btn-example" onclick="layer_open('layer2');return false;">
+			  <img src = "./image/temp.png" style = "width: 80px; height:80px"></a></span>
+			  <span><a href="#" class="btn-example" onclick="layer_open('layer2');return false;">
+		    <img src = "./image/temp.png" style = "width: 80px; height:80px"></a></span>
+		    <span><a href="#" class="btn-example" onclick="layer_open('layer2');return false;">
+		    <img src = "./image/temp.png" style = "width: 80px; height:80px"></a></span>
+		    <span><a href="#" class="btn-example" onclick="layer_open('layer2');return false;">
+		    <img src = "./image/temp.png" style = "width: 80px; height:80px"></a></span>
+	    <div>
+		    <div class="fotorama" style = "width:300px; height:300px">
+	      <img src="http://s.fotorama.io/1.jpg">
+	      <img src="http://s.fotorama.io/2.jpg">
+	      </div>
+      </div>
+	    </div> 
+	    <!-- 로그인 팝업창  -->
+			<div class="layer">
+			  <div class="bg"></div>
+			  <div id="layer2" class="pop-layer">
+			    <div class="pop-container">
+			      <div class="pop-conts">
+			        <!--content //-->
+			        <form class="form-horizontal">
+							  <div class="form-group">
+							    <label for="id" class="col-sm-2 control-label">ID</label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" id="id" placeholder="ID">
+							    </div>
+							  </div>
+							  <div class="form-group">
+							    <label for="password" class="col-sm-2 control-label">Password</label>
+							    <div class="col-sm-10">
+							      <input type="password" class="form-control" id="password" placeholder="Password">
+							    </div>
+							  </div>
+							</form>
+                
+			    <div class="btn-r">
+			     <button type="submit" class="btn btn-default">Login</button>
+			     <a href="#" class="btn btn-default">Close</a>
+			    </div>
+			  </div>
+			</div>
 	  </div>
 	 </div>
 	</div>
 </body>
+<script type="text/javascript">
+  function layer_open(el){
+
+    var temp = $('#' + el);
+    var bg = temp.prev().hasClass('bg');  //dimmed 레이어를 감지하기 위한 boolean 변수
+
+    if(bg){
+      $('.layer').fadeIn(); //'bg' 클래스가 존재하면 레이어가 나타나고 배경은 dimmed 된다. 
+    }else{
+      temp.fadeIn();
+    }
+
+    // 화면의 중앙에 레이어를 띄운다.
+    if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+    else temp.css('top', '0px');
+    if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+    else temp.css('left', '0px');
+
+    temp.find('a.cbtn').click(function(e){
+      if(bg){
+        $('.layer').fadeOut(); //'bg' 클래스가 존재하면 레이어를 사라지게 한다. 
+      }else{
+        temp.fadeOut();
+      }
+      e.preventDefault();
+    });
+
+    $('.layer .bg').click(function(e){  //배경을 클릭하면 레이어를 사라지게 하는 이벤트 핸들러
+      $('.layer').fadeOut();
+      e.preventDefault();
+    });
+
+  }       
+</script>
 </html>
