@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+</head>
+
+<body>
+<h1>회원가입</h1>
+<form action="signUp.do" method="post" enctype="multipart/form-data">
+아이디:<input name="id" type="text" placeholder="아이디를 입력하세요."><br>
+암호:<input name="password" type="password" placeholder="암호를 입력하세요."><br>
+암호확인:<input type="password" placeholder="확인차 암호를 다시 입력하세요."><br> <!-- name을 주지않으면 보내지않음 -->
+이메일:<input name="email" type="email" placeholder="이메일을 입력하세요."><br>
+사진:<input name="file" type="file"><br> <!-- 멤버 컨트롤러의 insert 인스턴스변수 file을 이름으로 -->
+
+<button type="submit">확인</button>
+<button type="button" onclick='onSelectEsc()'>취소</button>
+</form>
+<script>
+  function onSelectEsc() {
+      location.href='../index.html'
+  }
+</script>
+
+</body>
+</html>
