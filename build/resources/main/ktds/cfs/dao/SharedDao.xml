@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ktds.cfs.dao.SharedDao">
+  <select id="selectList" resultType="Shared">
+    select s_no as no,s_title as title, s_url as u,s_count as count, s_writer as writer, s_date as createDate
+    from shared
+  </select>
+  <insert id="insert" parameterType="Shared">
+  insert into shared(s_title,s_url,s_date,s_writer)
+  values(#{title},#{u},now(),#{writer})
+  </insert>
+</mapper>

@@ -2,11 +2,31 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="ktds.cfs.dao.MemberDao">
-
-  <insert id ="insert" parameterType="Member">
-    insert into members(m_id, pwd, email, photo, create_date)
-    values(#{id}, #{password}, #{email}, #{photo}, now())
+	
+	<insert id="insert" parameterType="Member">
+	insert into members(m_id,m_pwd,m_nickname,photo)
+	values(#{id},#{password},#{nickName},#{photo})
+	</insert>
+	<update id="addcount" parameterType="Favorite">
+	update shared set s_count=s_count+1 where s_no=#{sno} and 
+	not exists(select * from bookmark where s_no=#{sno} and m_no=#{mno})
+	
+	</update>
+	<insert id="favorite" parameterType="Favorite">
+  insert into bookmark(m_no,s_no) values(#{mno},#{sno})
   </insert>
+	<select id="loginInfo" parameterType="map" resultType="Member">
+	select m_no as no, m_id as id, m_nickname as nickName, photo, m_level as userLevel from members where m_id=#{id} and m_pwd=#{password}
+	</select>
+	<select id="exist" parameterType="string" resultType="int">
+	select count(m_id)
+  from members
+  where m_id=#{id}
+	</select>
+	<delete id="bmdelete" parameterType="Favorite">
+	delete from bookmark where s_no=#{sno} and m_no=#{mno}
+	
+	</delete>
+	
 </mapper>

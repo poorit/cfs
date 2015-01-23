@@ -1,0 +1,55 @@
+@CHARSET "UTF-8";
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.wrap {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #ebfbff;
+}
+
+.container {
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #888888;
+}
+
+.menubar {
+  width: 10%; margin : 0 auto;
+  float: left;
+  margin: 0 auto;
+}
+
+.menubar span {
+  width: 100%;
+  display: fixed;
+  margin: 0 auto;
+  padding-left: 20px;
+  float: left;
+}
+
+.contents {
+  padding-top:50px;
+  width: 90%;
+  margin:0 auto;
+}
+.tab1_content{
+  margin:0 auto;
+}
+.tab1_content span{
+  padding:13px;
+  margin:0 auto;
+}
+.tab2_content span{
+  padding:10px;
+  margin:0 auto;
+}
+.tab3_content span{
+  padding:10px;
+  margin:0 auto;
+}

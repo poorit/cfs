@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ktds.cfs.dao.FavoriteDao">
+	<select id="selectList" parameterType="int" resultType="Shared">
+    select s.s_no as no,s.s_title as title, s.s_url as u,s.s_count as count, s.s_writer as writer, s.s_date as createDate
+    from shared s,members m, bookmark b
+    where b.s_no=s.s_no and b.m_no=m.m_no and b.m_no=#{val}
+  </select>
+</mapper>
