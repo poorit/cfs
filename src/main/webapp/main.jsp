@@ -101,7 +101,17 @@
 border-radius:60px;
 -moz-border-radius:60px;
 -webkit-border-radius:60px;
-border:3px dotted;
+border:3px solid Thistle;
+}
+
+.main_logo{
+  margin:auto;
+  width:300px;
+  height:244px;
+  line-height:330px;
+}
+.main_logo img{
+vertical-align:middle;
 }
 </style>
 </head>
@@ -110,30 +120,34 @@ border:3px dotted;
 <body>
 	<div class="wrap">
 		<div class="container">
-			<div class="main_top"></div>
+			<div class="main_top">
+			<div class="main_logo">
+			 <img src="./images/logo2.png">
+			 </div>
+			</div>
 			<div class="main_bottom">
 				<div class="main_menu">
 					<c:choose>
 						<c:when test="${empty loginInfo}">
 							<span><a href="#" class="btn-example"
 								onclick="layer_open('layer2');return false;"> <img class="main_btn"
-									src="./images/temp.png" style="width: 80px; height: 80px"></a></span>
+									src="./images/logo.png" style="width: 100px; height: 100px"></a></span>
 						</c:when>
 						<c:otherwise>
 							<span><a href="member/logout.do" class="btn-example">
 									<img src="files/${loginInfo.photo}" class="main_btn"
-									style="width: 80px; height: 80px;">
+									style="width: 100px; height: 100px;">
 							</a></span>
 						</c:otherwise>
 					</c:choose>
 					<span><a href="member/colouringbook.do" class="btn-example"> <img class="main_btn"
-							src="./images/temp.png" style="width: 80px; height: 80px"></a></span>
+							src="./images/logo.png" style="width: 100px; height: 100px"></a></span>
 					<span><a href="#" class="btn-example"
 						onclick="layer_open('layer2');return false;"> <img class="main_btn"
-							src="./images/temp.png" style="width: 80px; height: 80px"></a></span>
+							src="./images/logo.png" style="width: 100px; height: 100px"></a></span>
 					<span><a href="#" class="btn-example"
 						onclick="layer_open('layer2');return false;"> <img class="main_btn"
-							src="./images/temp.png" style="width: 80px; height: 80px"></a></span>
+							src="./images/logo.png" style="width: 100px; height: 100px"></a></span>
 				</div>
 				<div class="main_gallery">
 					<div class="slider5">

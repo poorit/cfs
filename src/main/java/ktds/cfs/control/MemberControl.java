@@ -91,11 +91,15 @@ public class MemberControl {
   }
   
   @RequestMapping("/colouringbook")
-  public String colouringbook(Model model)
+  public String colouringbook(Model model,HttpSession session)
   {
     System.out.println("로딩성공");
-    List l = sharedDao.selectList();
-    model.addAttribute("list",l);
+    Member m = (Member)session.getAttribute("loginInfo");
+    
+    List l = favoriteDao.selectList(m.getNo());
+    List l2 = sharedDao.selectList();
+    model.addAttribute("bookmark",l);
+    model.addAttribute("list",l2);
     //session.setAttribute("colouringbook",model);
     return "/colouringbook.jsp";
     
@@ -105,7 +109,7 @@ public class MemberControl {
   {
     Member m = (Member)session.getAttribute("loginInfo");
     memberDao.bookmark(no,m.getNo());
-    return "redirect:/member/main.do";
+    return "redirect:/member/colouringbook.do";
   }
   @RequestMapping("/bmlist")
   public String bmlist(Model model,HttpSession session)
@@ -113,14 +117,14 @@ public class MemberControl {
     Member m = (Member)session.getAttribute("loginInfo");
     model.addAttribute("bmlist",favoriteDao.selectList(m.getNo()));
     model.addAttribute("list",sharedDao.selectList());
-    return "/member/main.jsp";
+    return "/colouringbook.jsp";
   }
   @RequestMapping("/bmdelete")
   public String bmdelete(int no,HttpSession session)
   {
     Member m = (Member)session.getAttribute("loginInfo");
     memberDao.bmdelete(no,m.getNo());
-    return "redirect:/member/bmlist.do";
+    return "redirect:/member/colouringbook.do";
     
   }
  
