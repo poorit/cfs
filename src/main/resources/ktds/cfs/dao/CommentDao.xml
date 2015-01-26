@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ktds.cfs.dao.CommentDao">
+ 
+ <select id="selectList" resultType="Comment">
+    select 
+    c_no as no,
+    c_contents as contents,
+    c_writer as writer,
+    b_no
+    from comments
+  </select>
+  <delete id="delcom" parameterType="int">
+  delete from comments where c_no=#{val}
+  </delete>
+ <insert id="insert" parameterType="Comment">
+  insert into comments(c_contents, c_writer, b_no)
+  values(#{contents},#{writer}, #{b_no})
+  </insert>
+
+</mapper>

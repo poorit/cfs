@@ -12,7 +12,7 @@ public class Member {
   public int getNo() {
     return no;
   }
-
+ 
   public String getPhoto() {
     return photo;
   }

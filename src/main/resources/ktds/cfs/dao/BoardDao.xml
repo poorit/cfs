@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ktds.cfs.dao.BoardDao">
+  <select id="selectList" resultType="Board">
+    select 
+    b_no as no,
+    b_title as title,
+    b_writer as writer,
+    b_count as count,
+    b_date as createDate
+    from board order by b_no desc
+  </select>
+  <select id="searchTitle" parameterType="map" resultType="Board">
+    select 
+    b_no as no,
+    b_title as title,
+    b_writer as writer,
+    b_count as count,
+    b_date as createDate
+    from board where b_title LIKE #{searchValue} order by b_no desc
+  </select>
+  <select id="searchWriter" parameterType="map" resultType="Board">
+    select 
+    b_no as no,
+    b_title as title,
+    b_writer as writer,
+    b_count as count,
+    b_date as createDate
+    from board where b_writer LIKE #{searchValue} order by b_no desc
+  </select>
+  <select id="searchContents" parameterType="map" resultType="Board">
+    select 
+    b_no as no,
+    b_title as title,
+    b_writer as writer,
+    b_count as count,
+    b_date as createDate
+    from board where b_contents LIKE #{searchValue} order by b_no desc
+  </select>
+  <update id="addcount" parameterType="int">
+  update board set b_count=b_count+1 where b_no=#{val}
+  
+  </update>
+  <select id="selectOne" 
+  parameterType="int" resultType="Board">
+   select 
+   b_no as no,
+   b_title as title,
+   b_contents as contents,
+   b_writer as writer
+    from board
+    where b_no=#{no}
+  </select>
+
+  <delete id="delete"
+  parameterType="int">
+  delete from board where b_no=#{id}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="Board">
+  insert into board(b_title, b_contents, b_date, b_writer)
+  values(#{title},#{contents}, now(), #{writer})
+  </insert>
+  <update id="update" parameterType="Board">
+  update board set b_title=#{title}, b_contents=#{contents}, b_date=now()
+  where b_no = #{no}
+  
+  </update>
+</mapper>

@@ -11,8 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="addcount" parameterType="Favorite">
 	update shared set s_count=s_count+1 where s_no=#{sno} and 
 	not exists(select * from bookmark where s_no=#{sno} and m_no=#{mno})
-	
 	</update>
+	<update id="modify" parameterType="Member">
+  update members set m_pwd=#{password},m_nickname=#{nickName},photo=#{photo}
+  where m_no=#{no}
+  </update>
 	<insert id="favorite" parameterType="Favorite">
   insert into bookmark(m_no,s_no) values(#{mno},#{sno})
   </insert>

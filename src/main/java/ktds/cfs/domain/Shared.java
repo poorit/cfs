@@ -12,7 +12,7 @@ public class Shared {
   public void setWriter(String writer) {
     this.writer = writer;
   }
-
+ 
   public int getNo() {
     return no;
   }

@@ -38,7 +38,27 @@ public class MemberDao {
       } catch (Exception e) {}
     }
   }
-  
+  public void modify(Member member)
+  {
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+    
+    try{
+      sqlSession.update("ktds.cfs.dao.MemberDao.modify", member);
+      
+      sqlSession.commit();
+      
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+
+    }finally
+    {
+      
+      try {
+        sqlSession.close();
+      } catch (Exception e) {}
+    }
+  }
   public Member getLoginInfo(String id, String password) {
     SqlSession sqlSession = sqlSessionFactory.openSession();
     

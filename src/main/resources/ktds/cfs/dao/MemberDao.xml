@@ -11,13 +11,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="addcount" parameterType="Favorite">
 	update shared set s_count=s_count+1 where s_no=#{sno} and 
 	not exists(select * from bookmark where s_no=#{sno} and m_no=#{mno})
-	
 	</update>
+	<update id="modify" parameterType="Member">
+  update members set m_pwd=#{password},m_nickname=#{nickName},photo=#{photo}
+  where m_no=#{no}
+  </update>
 	<insert id="favorite" parameterType="Favorite">
   insert into bookmark(m_no,s_no) values(#{mno},#{sno})
   </insert>
 	<select id="loginInfo" parameterType="map" resultType="Member">
-	select m_no as no, m_id as id, m_nickname as nickName, photo, m_level as userLevel from members where m_id=#{id} and m_pwd=#{password}
+	select m_no as no, m_id as id, m_pwd as password, m_nickname as nickName, photo, m_level as userLevel from members where m_id=#{id} and m_pwd=#{password}
 	</select>
 	<select id="exist" parameterType="string" resultType="int">
 	select count(m_id)

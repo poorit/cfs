@@ -10,7 +10,7 @@ public class Favorite {
   public void setMno(int mno) {
     this.mno = mno;
   }
-
+ 
   public int getSno() {
     return sno;
   }

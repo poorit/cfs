@@ -8,7 +8,7 @@
 <title>${loginInfo.nickName}</title>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
-	
+	 
 </script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="../css/bootstrap.min.css">
@@ -28,7 +28,7 @@
 	border-radius: 60px;
 	-moz-border-radius: 60px;
 	-webkit-border-radius: 60px;
-	border: 2px solid #444444;
+	border: 3px solid #444444;
 }
 
 .design_upload {
@@ -58,7 +58,6 @@
 	border: 2px dotted tomato;
 	cursor: pointer;
 	margin: 0 auto;
-	cursor: pointer;
 }
 
 #d_file {
@@ -77,12 +76,25 @@
 	margin: 0 auto;
 }
 
-.tab3_content, .tab1_content img {
+.tab3_content, .tab2_content, .tab1_content img {
 	cursor: pointer;
+}
+#info_file {
+  display: none;
+}
+
+#info_img {
+  cursor: pointer;
 }
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("#info_btn").click(function(){
+			$('#myModal').modal();
+			$('#myModal').on('shown.bs.modal', function () {
+			   
+			  });
+		});
 		$("#d_img").click(function() {
 			$("input[id='d_file']").click();
 		});
@@ -112,6 +124,22 @@
 				$('#' + title + '_modal .modal-body').html('');
 			});
 		});
+		$('.bookmark_img img').on('click', function() {
+		      var src = $(this).attr('src');
+		      var img = '<img src="' + src + '" class="img-responsive"/>';
+		      var title = $(this).attr('id');
+
+		      $('#' + title + '_modal').modal();
+		      $('#' + title + '_modal').on('shown.bs.modal', function() {
+		        $('#' + title + '_modal .modal-body').html(img);
+		      });
+		      $('#' + title + '_modal').on('hidden.bs.modal', function() {
+		        $('#' + title + '_modal .modal-body').html('');
+		      });
+		    });
+		$("#info_img").click(function() {
+		      $("input[id='info_file']").click();
+		    });
 	});
 	function readURL(input) {
 		if (input.files && input.files[0]) {
@@ -122,6 +150,15 @@
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
+	function readURL(input) {
+	    if (input.files && input.files[0]) {
+	      var reader = new FileReader();
+	      reader.onload = function(e) {
+	        document.getElementById('info_img').src = e.target.result;
+	      }
+	      reader.readAsDataURL(input.files[0]);
+	    }
+	  }
 	function bookmark(no) {
 		location.href = '../member/bookmark.do?no=' + no;
 	}
@@ -139,20 +176,18 @@
 			<span><a href="../main.jsp" class="btn-example"> <img
 					class="main_btn" src="../images/logo.png"
 					style="width: 80px; height: 80px">
-			</a></span> <span><a href="#" class="btn-example"
-				onclick="layer_open('layer2');return false;"> <img
+			</a></span> <span><a id="info_btn" href="#" class="btn-example"> <img
 					class="main_btn" src="../files/${loginInfo.photo}"
-					style="width: 80px; height: 80px"></a></span> <span><a href="#"
-				class="btn-example" onclick="layer_open('layer2');return false;">
-					<img class="main_btn" src="../images/logo.png"
+					style="width: 80px; height: 80px"></a></span> <span><a
+				href="colouringbook.do" class="btn-example"> <img
+					class="main_btn" src="../images/paint.png"
+					style="width: 80px; height: 80px">
+			</a></span> <span><a href="../board/list.do" class="btn-example"> <img
+					class="main_btn" src="../images/board.png"
 					style="width: 80px; height: 80px">
 			</a></span> <span><a href="#" class="btn-example"
 				onclick="layer_open('layer2');return false;"> <img
-					class="main_btn" src="../images/logo.png"
-					style="width: 80px; height: 80px">
-			</a></span> <span><a href="#" class="btn-example"
-				onclick="layer_open('layer2');return false;"> <img
-					class="main_btn" src="../images/logo.png"
+					class="main_btn" src="../images/gallery.png"
 					style="width: 80px; height: 80px"></a></span>
 		</div>
 		<div class="container">
@@ -190,7 +225,38 @@
 																</div>
 															</div>
 															<a href="#" class="btn btn-info btn-lg btn-block"
-																onclick="bookmark(${shared.no})">즐겨찾기추가</a> <a href="#"
+																onclick="bookmark(${shared.no})">즐겨찾기추가</a> <a
+																href="../mycanvas.html"
+																class="btn btn-info btn-lg btn-block">선택</a>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+
+										<!-- /.modal-dialog -->
+									</div>
+									<!-- /.modal -->
+								</c:forEach>
+							</div>
+						</div>
+						<div class="tab2_content">
+							<div class="bookmark_img" style="width: 100%; margin: 0 auto;">
+								<c:forEach var="admin" items="${admin}">
+									<img id="img_${admin.no}_a" src="../files/${admin.u}"
+										style="width: 250px; height: 250px; padding: 4px;">
+									<div class="modal fade" id="img_${admin.no}_a_modal"
+										tabindex="-1" role="dialog" aria-labelledby="myModal2"
+										aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body"></div>
+												<div class="col-md-3 col-sm-3 col-xs-6" style="width: 100%">
+													<div class="panel panel-info active-plan-price">
+														<div id="d_title" class="panel-heading">${admin.title}</div>
+														<div class="panel-body">
+															<a href="../mycanvas.html"
 																class="btn btn-info btn-lg btn-block">선택</a>
 														</div>
 													</div>
@@ -202,18 +268,16 @@
 
 										<!-- /.modal-dialog -->
 									</div>
-									<!-- /.modal -->
 								</c:forEach>
 							</div>
 						</div>
-						<div class="tab2_content"><!-- BASIC 도안 출력부분 --></div>
 						<div class="tab3_content">
 							<div class="bookmark_img" style="width: 100%; margin: 0 auto;">
 								<c:forEach var="bookmark" items="${bookmark}">
-									<img id = "img_${bookmark.no}_b" src="../files/${bookmark.u}"
+									<img id="img_${bookmark.no}_b" src="../files/${bookmark.u}"
 										style="width: 250px; height: 250px; padding: 4px;">
-									<div class="modal fade" id="img_${bookmark.no}_b_modal" tabindex="-1"
-										role="dialog" aria-labelledby="myModal2"
+									<div class="modal fade" id="img_${bookmark.no}_b_modal"
+										tabindex="-1" role="dialog" aria-labelledby="myModal3"
 										aria-hidden="true">
 										<div class="modal-dialog">
 											<div class="modal-content">
@@ -222,9 +286,10 @@
 													<div class="panel panel-info active-plan-price">
 														<div id="d_title" class="panel-heading">${bookmark.title}</div>
 														<div class="panel-body">
-															
+
 															<a href="#" class="btn btn-info btn-lg btn-block"
-																onclick="bmdelete(${bookmark.no})">즐겨찾기삭제</a> <a href="../mycanvas.html"
+																id="d_btn" onclick="bmdelete(${bookmark.no})">즐겨찾기삭제</a>
+															<a href="../mycanvas.html"
 																class="btn btn-info btn-lg btn-block">선택</a>
 														</div>
 													</div>
@@ -252,9 +317,9 @@
 										</div>
 									</div>
 									<div class="form-group" id="d_input_img">
-										<img id="d_img" style = "width:400px; height:400px;"src="http://placehold.it/400x400&text=IMG" />
-										<input id="d_file" name="file" type="file"
-											onchange="readURL(this)"; >
+										<img id="d_img" style="width: 400px; height: 400px;"
+											src="http://placehold.it/400x400&text=IMG" /> <input
+											id="d_file" name="file" type="file" onchange="readURL(this)"; >
 									</div>
 									<div class="d_btn">
 										<button type="submit" class="btn btn-default">등록</button>
@@ -268,6 +333,82 @@
 			</div>
 		</div>
 
+		<!-- 회원 정보 팝업창 -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">${loginInfo.nickName}
+							님의 정보</h4>
+					</div>
+					<form class="form-horizontal" action="../member/modify.do"
+						method="post" enctype="multipart/form-data"
+						onsubmit="return info_check();">
+						<div class="modal-body" style="width: 45%; margin: 0 auto;">
+							<img id="info_img" style="width: 250px; height: 250px;"
+								src="../files/${loginInfo.photo}" /> <input id="info_file"
+								name="file" type="file" onchange="readURL(this);">
+						</div>
+						<div class="info_value"
+							style="width: 80%; margin: 0 auto; text-align: center;">
+
+							<div class="form-group">
+								<label for="info_id" class="col-sm-2 control-label">아이디:
+								</label>
+								<div class="col-sm-8">
+									<input id="info_id" name="id" class="form-control"
+										value="${loginInfo.id}" size="5" readonly />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="info_name" class="col-sm-2 control-label">닉네임:
+								</label>
+								<div class="col-sm-8">
+									<input id="info_name" name="nickName" class="form-control"
+										value="${loginInfo.nickName}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="info_password_after" class="col-sm-2 control-label">현재
+									비밀번호: </label>
+								<div class="col-sm-8">
+									<input id="info_password_now" class="form-control"
+										type="password" value="" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="info_password_after" class="col-sm-2 control-label">바꿀
+									비밀번호: </label>
+								<div class="col-sm-8">
+									<input id="info_password_after" name="password" type="password"
+										class="form-control" value="" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="info_password_chk" class="col-sm-2 control-label">재입력:
+								</label>
+								<div class="col-sm-8">
+									<input id="info_password_chk" name="password_chk"
+										class="form-control" type="password" value="" />
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">변경하기</button>
+							<button type="button" class="btn btn-primary"
+								onClick="location.href = 'member/logout.do'">로그아웃</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">나가기</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

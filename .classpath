@@ -3,8 +3,6 @@
 	<classpathentry kind="output" path="bin"/>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container" exported="true"/>
 	<classpathentry sourcepath="C:/Users/bit/.gradle/caches/modules-2/files-2.1/org.springframework/spring-jdbc/4.1.4.RELEASE/afd94a53515e02aee4ce2a5d44d93b167998ac7a/spring-jdbc-4.1.4.RELEASE-sources.jar" kind="lib" path="C:/Users/bit/.gradle/caches/modules-2/files-2.1/org.springframework/spring-jdbc/4.1.4.RELEASE/d54f4a5f3e37cd505afbf731b06b9a1c4b564ec1/spring-jdbc-4.1.4.RELEASE.jar" exported="true">

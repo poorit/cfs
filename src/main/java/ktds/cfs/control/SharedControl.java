@@ -44,7 +44,14 @@ public class SharedControl {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    sharedDao.insert(shared);
+    if(member.getUserLevel()==0)
+    {
+      sharedDao.insertUser(shared);
+    }
+    else
+    {
+      sharedDao.insertAdmin(shared);
+    }
     return "redirect:../member/colouringbook.do";
   }
   
