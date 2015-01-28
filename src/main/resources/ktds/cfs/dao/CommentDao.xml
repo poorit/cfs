@@ -4,14 +4,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ktds.cfs.dao.CommentDao">
  
- <select id="selectList" resultType="Comment">
+ <select id="selectList" parameterType="map" resultType="Comment">
     select 
     c_no as no,
     c_contents as contents,
     c_writer as writer,
     b_no
     from comments
+    where b_no = #{b_no}
+    limit #{startIndex}, #{pageSize}
   </select>
+  
+  <select id = "totalCount" parameterType="int" resultType = "int">
+    select count(b_no) from comments where b_no=#{value}
+  </select>
+  
   <delete id="delcom" parameterType="int">
   delete from comments where c_no=#{val}
   </delete>

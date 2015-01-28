@@ -34,7 +34,22 @@ public class SharedDao {
      sqlSession2.close();
     }
   }
-  
+  public List<Shared> selectHot() {
+    SqlSession sqlSession2 = sqlSessionFactory.openSession();
+    
+    try{
+      return sqlSession2.selectList("ktds.cfs.dao.SharedDao.selectHotList");
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+      
+
+    }finally
+    {
+     sqlSession2.close();
+    }
+  }
   public void insertUser(Shared shared)
   {
     SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -93,5 +108,7 @@ public class SharedDao {
      sqlSession2.close();
     }
   }
+
+  
 
 }

@@ -138,13 +138,14 @@ public class MemberControl {
   public String colouringbook(Model model, HttpSession session) {
     System.out.println("로딩성공");
     Member m = (Member) session.getAttribute("loginInfo");
-
     List l = favoriteDao.selectList(m.getNo());
     List l2 = sharedDao.selectList();
     List l3 = sharedDao.selectAdminList();
+    List l4 = sharedDao.selectHot();
     model.addAttribute("bookmark", l);
     model.addAttribute("list", l2);
     model.addAttribute("admin", l3);
+    model.addAttribute("hot", l4);
     // session.setAttribute("colouringbook",model);
     return "/colouringbook.jsp";
 

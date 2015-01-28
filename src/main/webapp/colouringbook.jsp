@@ -79,12 +79,17 @@
 .tab3_content, .tab2_content, .tab1_content img {
 	cursor: pointer;
 }
+
 #info_file {
-  display: none;
+	display: none;
 }
 
 #info_img {
-  cursor: pointer;
+	cursor: pointer;
+}
+
+.hot_img {
+	border: 2px solid black;
 }
 </style>
 <script type="text/javascript">
@@ -111,6 +116,7 @@
 				$('#' + title + '_modal .modal-body').html('');
 			});
 		});
+		
 		$('.bookmark_img img').on('click', function() {
 			var src = $(this).attr('src');
 			var img = '<img src="' + src + '" class="img-responsive"/>';
@@ -137,11 +143,24 @@
 		        $('#' + title + '_modal .modal-body').html('');
 		      });
 		    });
+		$('.hot_img img').on('click', function() {
+	          var src = $(this).attr('src');
+	          var img = '<img src="' + src + '" class="img-responsive"/>';
+	          var title = $(this).attr('id');
+
+	          $('#' + title + '_modal').modal();
+	          $('#' + title + '_modal').on('shown.bs.modal', function() {
+	            $('#' + title + '_modal .modal-body').html(img);
+	          });
+	          $('#' + title + '_modal').on('hidden.bs.modal', function() {
+	            $('#' + title + '_modal .modal-body').html('');
+	          });
+	        });
 		$("#info_img").click(function() {
 		      $("input[id='info_file']").click();
 		    });
 	});
-	function readURL(input) {
+	function design_readURL(input) {
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
@@ -150,7 +169,7 @@
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
-	function readURL(input) {
+	function info_readURL(input) {
 	    if (input.files && input.files[0]) {
 	      var reader = new FileReader();
 	      reader.onload = function(e) {
@@ -169,6 +188,12 @@
 		location.href = '../member/bmdelete.do?no=' + no;
 	}
 </script>
+<style>
+.img-responsive {
+	width: 100%;
+	height: 400px;
+}
+</style>
 </head>
 <body>
 	<div class="wrap">
@@ -205,10 +230,50 @@
 							for="tab3">BOOKMARK</label> <label for="tab4">UPLOAD</label>
 						<!-- 탭 내용 : 탭 제목을 선택했을 때 표시되는 본문 -->
 						<div class="tab1_content" style="background-color: white">
-							<div class="all_img" style="width: 100%; margin: 0 auto;">
-								<c:forEach var="shared" items="${list}">
-									<img id="img_${shared.no}" src="../files/${shared.u}"
+
+							<div class="hot_img"
+								style="margin-bottom: 10px; padding: 5px 0 5px 0;">
+								<span id="hot_logo"
+									style="display: fixed; top: -90px; left: -230px; text-align: left;">
+									<img src="../images/hot2.jpg"
+									style="width: 50px; height: 50px;"> <span>HOT</span>
+								</span>
+								<c:forEach var="hot" items="${hot}">
+									<img id="img_${hot.no}_h" src="../files/${hot.u}"
 										style="width: 250px; height: 250px; padding: 4px;">
+									<div class="modal fade" id="img_${hot.no}_h_modal"
+										tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+										aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body"></div>
+												<div class="col-md-3 col-sm-3 col-xs-6" style="width: 100%">
+													<div class="panel panel-info active-plan-price">
+														<div id="d_title" class="panel-heading">${hot.title}</div>
+														<div class="panel-body">
+															<div class="round-body">
+																<div class="price-main">
+																	<span> ${hot.count}</span><br> <small>BOOKMARK</small>
+																</div>
+															</div>
+															<a href="#" class="btn btn-info btn-lg btn-block"
+																onclick="bookmark(${hot.no})">즐겨찾기추가</a> <a
+																href="../mycanvas.html"
+																class="btn btn-info btn-lg btn-block">선택</a>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+								</c:forEach>
+							</div>
+							<div class="all_img" style="width: 100%; height:500px; overflow:auto; margin: 0 auto;">
+								<c:forEach var="shared" items="${list}">
+										<img id="img_${shared.no}" src="../files/${shared.u}"
+											style="width: 250px; height: 250px; padding: 4px;">
 									<div class="modal fade" id="img_${shared.no}_modal"
 										tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 										aria-hidden="true">
@@ -221,7 +286,7 @@
 														<div class="panel-body">
 															<div class="round-body">
 																<div class="price-main">
-																	<span> ${shared.count }</span></br> <small>BOOKMARK</small>
+																	<span> ${shared.count}</span><br> <small>BOOKMARK</small>
 																</div>
 															</div>
 															<a href="#" class="btn btn-info btn-lg btn-block"
@@ -234,7 +299,6 @@
 											</div>
 											<!-- /.modal-content -->
 										</div>
-
 										<!-- /.modal-dialog -->
 									</div>
 									<!-- /.modal -->
@@ -242,7 +306,8 @@
 							</div>
 						</div>
 						<div class="tab2_content">
-							<div class="bookmark_img" style="width: 100%; margin: 0 auto;">
+							<div class="bookmark_img" style="width: 100%; height:8
+							00px; overflow:auto; margin: 0 auto;">
 								<c:forEach var="admin" items="${admin}">
 									<img id="img_${admin.no}_a" src="../files/${admin.u}"
 										style="width: 250px; height: 250px; padding: 4px;">
@@ -272,7 +337,7 @@
 							</div>
 						</div>
 						<div class="tab3_content">
-							<div class="bookmark_img" style="width: 100%; margin: 0 auto;">
+							<div class="bookmark_img" style="width: 100%; height:800px; overflow:auto; margin: 0 auto;">
 								<c:forEach var="bookmark" items="${bookmark}">
 									<img id="img_${bookmark.no}_b" src="../files/${bookmark.u}"
 										style="width: 250px; height: 250px; padding: 4px;">
@@ -319,7 +384,8 @@
 									<div class="form-group" id="d_input_img">
 										<img id="d_img" style="width: 400px; height: 400px;"
 											src="http://placehold.it/400x400&text=IMG" /> <input
-											id="d_file" name="file" type="file" onchange="readURL(this)"; >
+											id="d_file" name="file" type="file"
+											onchange="design_readURL(this);">
 									</div>
 									<div class="d_btn">
 										<button type="submit" class="btn btn-default">등록</button>
@@ -352,7 +418,7 @@
 						<div class="modal-body" style="width: 45%; margin: 0 auto;">
 							<img id="info_img" style="width: 250px; height: 250px;"
 								src="../files/${loginInfo.photo}" /> <input id="info_file"
-								name="file" type="file" onchange="readURL(this);">
+								name="file" type="file" onchange="info_readURL(this);">
 						</div>
 						<div class="info_value"
 							style="width: 80%; margin: 0 auto; text-align: center;">
@@ -401,7 +467,7 @@
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-primary">변경하기</button>
 							<button type="button" class="btn btn-primary"
-								onClick="location.href = 'member/logout.do'">로그아웃</button>
+								onClick="location.href = '../member/logout.do'">로그아웃</button>
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">나가기</button>
 						</div>

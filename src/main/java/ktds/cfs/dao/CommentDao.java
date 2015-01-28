@@ -1,5 +1,6 @@
 package ktds.cfs.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import ktds.cfs.domain.Board;
@@ -17,18 +18,34 @@ public class CommentDao {
   SqlSessionFactory sqlSessionFactory;
   
   
-  public List<Comment> selectList()
+  public List<Comment> selectList(int startIndex, int pageSize,int no)
   {
     SqlSession sqlSession = sqlSessionFactory.openSession();
-    
     try{
-      return sqlSession.selectList("ktds.cfs.dao.CommentDao.selectList");
+      HashMap<String, Integer> map = new HashMap<String, Integer>();
+      map.put("startIndex", startIndex);
+      map.put("pageSize", pageSize);
+      map.put("b_no",no);
+      return sqlSession.selectList("ktds.cfs.dao.CommentDao.selectList", map);
     } catch (Exception e) {
       e.printStackTrace();
       return null;
     }finally
     {
      sqlSession.close();
+    }
+  }
+  
+  public int totalCount(int num) {
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+    try {
+      return sqlSession.selectOne("ktds.cfs.dao.CommentDao.totalCount", num);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return 0;
+      
+    } finally {
+      sqlSession.close();
     }
   }
   

@@ -41,12 +41,29 @@ public class BoardDao {
     }
   }
   
-  public List<Board> selectList()
+  public int totalCount()
   {
     SqlSession sqlSession = sqlSessionFactory.openSession();
-    
+    try {
+      return sqlSession.selectOne("ktds.cfs.dao.BoardDao.totalCount");
+    } catch (Exception e) {
+      e.printStackTrace();
+      return 0;
+    }finally
+    {
+      sqlSession.close();
+    }
+  }
+  
+  public List<Board> selectList(int startIndex, int pageSize)
+  {
+    SqlSession sqlSession = sqlSessionFactory.openSession();
     try{
-      return sqlSession.selectList("ktds.cfs.dao.BoardDao.selectList");
+      HashMap<String, Integer> map = new HashMap<String, Integer>();
+      map.put("startIndex", startIndex);
+      map.put("pageSize", pageSize);
+      return sqlSession.selectList("ktds.cfs.dao.BoardDao.selectList", map);
+      
     } catch (Exception e) {
       e.printStackTrace();
       return null;
@@ -55,6 +72,7 @@ public class BoardDao {
      sqlSession.close();
     }
   }
+  
   public void insert(Board board)
   {
     SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -154,6 +172,4 @@ public class BoardDao {
     }
     
   }
-  
-  
 }

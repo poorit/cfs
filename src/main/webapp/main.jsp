@@ -8,12 +8,12 @@
 <title>Colouring For SalaryMan Website</title>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<link rel="stylesheet" href="./css/bootstrap.min.css">
-<link rel="stylesheet" href="./css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="./css/common.css">
-<link rel="stylesheet" href="./css/main/main.css">
-<link rel="stylesheet" href="./css/main/gallery/gallery.css">
-<link rel="stylesheet" href="./css/main/login.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/main/main.css">
+<link rel="stylesheet" href="css/main/gallery/gallery.css">
+<link rel="stylesheet" href="css/main/login.css">
 <link
 	href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.3/fotorama.css"
 	rel="stylesheet">
@@ -134,6 +134,19 @@
 </script>
 <!-- JOIN END -->
 
+<script>
+function check_book(){
+
+	  var check = "<c:out value = "${loginInfo}"/>";
+
+	  if(check == "")
+		{
+		  alert("Please Login");
+		} else {
+			location.href = "member/colouringbook.do";
+		}  
+}
+</script>
 <style>
 .main_btn {
 	border-radius: 60px;
@@ -153,10 +166,7 @@
 	vertical-align: middle;
 }
 
-.form-group label {
-	width: 120px;
-	margin: 0 auto;
-}
+
 
 #info_file {
 	display: none;
@@ -193,7 +203,7 @@
 							</a></span>
 						</c:otherwise>
 					</c:choose>
-					<span><a href="member/colouringbook.do" class="btn-example">
+					<span><a href="#" class="btn-example" onclick="check_book();">
 							<img class="main_btn" src="./images/paint.png"
 							style="width: 100px; height: 100px">
 					</a></span> <span><a href="board/list.do" class="btn-example"> <img
@@ -319,98 +329,97 @@
 
 
 	<!-- 로그인 팝업창  -->
-	<div class="layer">
-		<div class="bg"></div>
-		<div id="layer2" class="pop-layer">
-			<div class="pop-container">
-				<div class="login_layer">
-					<div class="pop-conts">
-						<!--content //-->
-						<form class="form-horizontal" action="member/login.do"
-							method="post">
-							<h1>LOGIN</h1>
-							<div class="form-group">
-								<label for="id" class="col-sm-2 control-label"> ID</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="l_id" name="id"
-										placeholder="ID">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="password" class="col-sm-2 control-label">Password</label>
-								<div class="col-sm-10">
-									<input type="password" class="form-control" id="l_password"
-										name="password" placeholder="Password">
-								</div>
-							</div>
-							<div style="text-align: right">
-								<a id="join_btn" style="cursor: pointer;">Join&gt;</a>
-							</div>
-							<div class="btn-r">
-								<button type="submit" class="btn btn-default" id="login_submit">OK</button>
-							</div>
-						</form>
-					</div>
+  <div class="layer">
+    <div class="bg"></div>
+    <div id="layer2" class="pop-layer">
+      <div class="pop-container">
+        <div class="login_layer">
+          <div class="pop-conts">
+            <!--content //-->
+            <form class="form-horizontal" action="../member/login.do"
+              method="post">
+              <h1>LOGIN</h1>
+              <div class="form-group">
+                <label for="id" class="col-sm-2 control-label"> ID</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="l_id" name="id"
+                    placeholder="ID">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="l_password"
+                    name="password" placeholder="Password">
+                </div>
+              </div>
+              <div style="text-align: right">
+                <a id="join_btn" style="cursor: pointer;">Join&gt;</a>
+              </div>
+              <div class="btn-r">
+                <button type="submit" class="btn btn-default" id="login_submit">OK</button>
+              </div>
+            </form>
+          </div>
 
 
-				</div>
-				<div class="join_layer" style="display: none;">
-					<div class="pop-conts">
-						<!--content //-->
-						<form class="form-horizontal" action="member/signUp.do"
-							method="post" enctype="multipart/form-data"
-							onsubmit="return validate();">
-							<h1>JOIN</h1>
-							<div class="form-group">
-								<label for="file" class="col-sm-2 control-label">IMAGE</label>
-								<div class="col-sm-10">
-									<input class="form-control" name="file" type="file">
-								</div>
+        </div>
+        <div class="join_layer" style="display: none;">
+          <div class="pop-conts">
+            <!--content //-->
+            <form class="form-horizontal" action="../member/signUp.do"
+              method="post" enctype="multipart/form-data"
+              onsubmit="return validate();">
+              <h1>JOIN</h1>
+              <div class="form-group">
+                <label for="file" class="col-sm-2 control-label">IMAGE</label>
+                <div class="col-sm-10">
+                  <input id="j_file" class="form-control" name="file" type="file">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="id" class="col-sm-2 control-label">ID</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="j_id" name="id"
+                    placeholder="ID">
+                  <button type="button" onclick="checkId()">중복검사</button>
+                </div>
 
-							</div>
-							<div class="form-group">
-								<label for="id" class="col-sm-2 control-label">ID</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="j_id" name="id"
-										placeholder="ID">
-									<button type="button" onclick="checkId()">중복검사</button>
-								</div>
-
-							</div>
-							<div class="form-group">
-								<label for="id" class="col-sm-2 control-label">NickName</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="j_nickname"
-										name="nickName" placeholder="ID">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="password" class="col-sm-2 control-label">Password</label>
-								<div class="col-sm-10">
-									<input type="password" class="form-control" id="j_password"
-										name="password" placeholder="Password">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="password" class="col-sm-2 control-label">Check
-									Password</label>
-								<div class="col-sm-10">
-									<input type="password" class="form-control" id="j_password_chk"
-										name="password_chk" placeholder="Password check">
-								</div>
-							</div>
-							<div style="text-align: left;">
-								<a id="login_btn" style="cursor: pointer;">&lt;Login</a>
-							</div>
-							<div class="btn-r">
-								<button type="submit" class="btn btn-default" id="join_submit">OK</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+              </div>
+              <div class="form-group">
+                <label for="id" class="col-sm-2 control-label">NickName</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="j_nickname"
+                    name="nickName" placeholder="ID">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="j_password"
+                    name="password" placeholder="Password">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Check
+                  Password</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="j_password_chk"
+                    name="password_chk" placeholder="Password check">
+                </div>
+              </div>
+              <div style="text-align: left;">
+                <a id="login_btn" style="cursor: pointer;">&lt;Login</a>
+              </div>
+              <div class="btn-r">
+                <button type="submit" class="btn btn-default" id="join_submit">OK</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 <script>
 	function onSelectEsc() {

@@ -72,36 +72,50 @@ function readURL(input) {
       }
       reader.readAsDataURL(input.files[0]);
     }
-  }
+ }
+function check(src){
+	  
+	  
+    var check = "<c:out value = "${loginInfo}"/>";
+
+    if(check == "")
+    {
+      alert("Please Login");
+    } else {
+      location.href = src;
+    }  
+}
 </script>
 <body>
 	<div class="wrap">
 		<div class="menubar">
 			<span><a href="../main.jsp" class="btn-example"> <img
 					class="main_btn" src="../images/logo.png"
-					style="width: 80px; height: 80px"> <c:choose>
-						<c:when test="${empty loginInfo}">
-							<span><a href="#" class="btn-example"
-								onclick="layer_open('layer2');return false;"> <img
-									class="main_btn" src="../images/login.png"
-									style="width: 80px; height: 80px"></a></span>
-						</c:when>
-						<c:otherwise>
-							<span><a href="#" id="info_btn" class="btn-example"> <img
-									src="../files/${loginInfo.photo}" class="main_btn"
-									style="width: 80px; height: 80px;">
-							</a></span>
-						</c:otherwise>
-					</c:choose> <span><a href="../member/colouringbook.do"
-						class="btn-example"> <img class="main_btn"
-							src="../images/paint.png" style="width: 80px; height: 80px">
-					</a></span> <span><a href="../board/list.do" class="btn-example"> <img
-							class="main_btn" src="../images/board.png"
-							style="width: 80px; height: 80px">
-					</a></span> <span><a href="#" class="btn-example"
+					style="width: 80px; height: 80px"></a></span>
+			<c:choose>
+				<c:when test="${empty loginInfo}">
+					<span><a href="#" class="btn-example"
 						onclick="layer_open('layer2');return false;"> <img
-							class="main_btn" src="../images/gallery.png"
+							class="main_btn" src="../images/login.png"
 							style="width: 80px; height: 80px"></a></span>
+				</c:when>
+				<c:otherwise>
+					<span><a href="#" id="info_btn" class="btn-example"> <img
+							src="../files/${loginInfo.photo}" class="main_btn"
+							style="width: 80px; height: 80px;">
+					</a></span>
+				</c:otherwise>
+			</c:choose>
+			<span><a href="#" class="btn-example" onclick = "check('../member/colouringbook.do');">
+					<img class="main_btn" src="../images/paint.png"
+					style="width: 80px; height: 80px">
+			</a></span> <span><a href="../board/list.do" class="btn-example"> <img
+					class="main_btn" src="../images/board.png"
+					style="width: 80px; height: 80px">
+			</a></span> <span><a href="#" class="btn-example"
+				onclick="layer_open('layer2');return false;"> <img
+					class="main_btn" src="../images/gallery.png"
+					style="width: 80px; height: 80px"></a></span>
 		</div>
 		<div class="container">
 			<div class="board_list">
@@ -132,7 +146,7 @@ function readURL(input) {
 					</tbody>
 				</table>
 				<div>
-					<button class="btn btn-success" onclick="onList()">
+					<button class="btn btn-success" onclick="check('form.html')">
 						<span class="glyphicon glyphicon-edit"></span>글쓰기
 					</button>
 					<button class="btn btn-success" onclick="onMain()">
@@ -150,6 +164,45 @@ function readURL(input) {
 						</form>
 					</div>
 				</div>
+			</div>
+			<div class = "page_no" style = "width:100%; margin:0 auto; text-align:center; padding-top:15px;">
+				<a href="list.do?pageNo=1"><button>맨앞으로</button></a>
+				&nbsp;&nbsp;&nbsp;
+				<c:if test="${pageNo > 4}">
+					<a href="list.do?pageNo=${pageNo - 4}">${pageNo - 4}</a>
+				</c:if>
+				&nbsp;
+				<c:if test="${pageNo > 3}">
+					<a href="list.do?pageNo=${pageNo - 3}">${pageNo - 3}</a>
+				</c:if>
+				&nbsp;
+				<c:if test="${pageNo > 2}">
+					<a href="list.do?pageNo=${pageNo - 2}">${pageNo - 2}</a>
+				</c:if>
+				&nbsp;
+				<c:if test="${pageNo > 1}">
+					<a href="list.do?pageNo=${pageNo - 1}">${pageNo - 1}</a>
+				</c:if>
+				&nbsp;&nbsp;
+				- ${pageNo} -
+				&nbsp;&nbsp;
+				<c:if test="${pageNo < totalPage}">
+					<a href="list.do?pageNo=${pageNo + 1}">${pageNo + 1}</a>
+				</c:if>
+				&nbsp;
+				<c:if test="${pageNo+1 < totalPage}">
+					<a href="list.do?pageNo=${pageNo + 2}">${pageNo + 2}</a>
+				</c:if>
+				&nbsp;
+				<c:if test="${pageNo+3 < totalPage}">
+					<a href="list.do?pageNo=${pageNo + 3}">${pageNo + 3}</a>
+				</c:if>
+				&nbsp;
+				<c:if test="${pageNo+4 < totalPage}">
+					<a href="list.do?pageNo=${pageNo + 4}">${pageNo + 4}</a>
+				</c:if>
+				&nbsp;&nbsp;&nbsp;
+				<a href="list.do?pageNo=${totalPage}"><button>맨뒤로</button></a>
 			</div>
 		</div>
 	</div>
@@ -321,7 +374,7 @@ function readURL(input) {
 			</div>
 		</div>
 	</div>
-<script type="text/javascript">
+	<script type="text/javascript">
   function layer_open(el) {
 
     var temp = $('#' + el);
@@ -358,7 +411,7 @@ function readURL(input) {
     });
   }
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 var checkedId = false;
 function checkId() {
   var id = $('#j_id').val();
@@ -423,9 +476,7 @@ function info_check() {
 	   function onView(no) {
 	          location.href = 'view.do?no='+no;
 	        }
-		function onList() {
-			 location.href = 'form.html';
-		}
+
 		function onMain() {
 			location.href = '../main.jsp';
 		}

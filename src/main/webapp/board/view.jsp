@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset=UTF-8">
+<meta charset="UTF-8">
 <title>게시물 상세보기</title>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -43,6 +43,13 @@
 <script>
 
 $(document).ready(function() {
+	 var check = "<c:out value = "${loginInfo}"/>";
+	 
+	 if(check == ""){
+		 $("#contents").attr("readonly","readonly");
+		 $("#contents").attr("value","로그인을해주세요");
+	 };
+	 
 	 $("#login_btn").click(function() {
          $(".login_layer").show();
          $(".join_layer").hide();
@@ -71,6 +78,8 @@ function readURL(input) {
       reader.readAsDataURL(input.files[0]);
     }
   }
+  
+
 </script>
 </head>
 
@@ -108,88 +117,185 @@ function readURL(input) {
 		</div>
 
 		<div class="container">
+		
 			<div class="board_view">
+			
+			  <!-- 타이틀 로고부분 -->
 				<div class="col-lg-12 text-center">
-					<h2 style="text-align: center">게시물 상세보기</h2>
+					<h2 style="text-align: center">게시물 상세보기</h2> 
 					<hr class="star-primary">
 				</div>
+				
+				<!-- 테이블을 골라서 보여줌 -->
 				<c:choose>
-					<c:when test="${board != null}">
-						<table class="table table-striped table-hover" width=100%
-							height=500px>
+				  
+					<c:when test="${board != null}"> <!-- 테이블이 있을 때 -->
+					 
+					  <!-- 상세보기  -->
+					  <form class="form-horizontal" action='update.do' method='post'>
+						<table class="table table-striped table-hover" style="width:100%; height:500px;">
 							<tbody data-link="row" class="rowlink">
-								<form class="form-horizontal" action='update.do' method='post'>
+							
+							    <!-- 타이틀 -->
 									<tr style="height: 35px">
-										<td
-											style="cursor: default; text-align: center; padding-top: 16px; font-size: 15px; width: 150px; font-weight: bold;">제목</td>
-										<td><input id="title" class="form-control" name='title'
-											type='text' readonly value='${board.title}'
-											style="background-color: white"></td>
+										<td style="cursor: default; text-align: center; padding-top: 16px; font-size: 15px; width: 150px; font-weight: bold;">
+										  제목
+										</td>
+										<td>
+										  <input id="title" class="form-control" name='title' type='text' readonly value='${board.title}'      
+											       style="background-color: white">
+									   </td>
 									</tr>
-
+									
+                  <!-- 보드내용 -->
 									<tr>
-										<td
-											style="cursor: default; text-align: center; padding-top: 16px; font-size: 15px; font-weight: bold;">내용</td>
-										<td><textarea class="form-control"
-												style="height: 100%; resize: none; background-color: white"
-												name="contents" readonly>${board.contents}</textarea></td>
+										<td style="cursor: default; text-align: center; padding-top: 16px; font-size: 15px; font-weight: bold;">
+										  내용
+										</td>
+										<td>
+										  <textarea class="form-control" style="height: 100%; resize: none; background-color: white"
+												        name="contents" readonly>${board.contents}</textarea>
+									 </td> 
 									</tr>
-
-									<tr class="form-group" style="height: 35px">
-										<td colspan="2"
-											style="text-align: right; visibility: collapse"><c:if
-												test="${board.writer == loginInfo.nickName}">
+                  
+                
+											
+											<!-- 작성자에게만 보여주는 버튼 -->
+											<c:if test="${board.writer == loginInfo.nickName}">
+											  <!-- 버튼들 -->
+                  <tr class="form-group" style="height:25px">
+                    <td colspan="1"style="text-align: right; visibility: collapse">
 												<button style="visibility: visible" type='button'
 													class="btn btn-default" onclick='onUpdatePage(${board.no})'>변경</button>
 												<button style="visibility: visible" type='button'
 													class="btn btn-default" onclick='onDelete(${board.no})'>삭제</button>
 												<button style="visibility: visible" type='button'
 													class="btn btn-default" onclick="onList()">목록</button>
-											</c:if></td>
-									</tr>
-								</form>
-							</tbody>
-						</table>
-						<table class="table table-striped table-hover" width=100%>
-							<tbody data-link="row" class="rowlink">
-								<c:forEach var="comment" items="${list}">
-									<c:if test="${comment.b_no == board.no}">
-										<tr>
-											<td
-												style="cursor: default; width: 150px; text-align: center; font-weight: bold">${comment.writer }</td>
-											<td style="padding-left: 20px">${comment.contents}</td>
-											<td style="text-align: center;"><c:if
-													test="${comment.writer == loginInfo.nickName}">
-													<form action='delcom.do?no=${comment.no}' method='post'>
-														<input style="display: none;" id="b_no" name='b_no'
-															type='text' value="${comment.b_no}"></input>
-														<button type='submit'>X</button>
-													</form>
-												</c:if></td>
-										</tr>
-									</c:if>
-								</c:forEach>
-								<form class="form-horizontal"
-									action='addComment.do?no=${board.no}' method='post'
-									onsubmit="return checkAddComment();">
-									<tr>
-										<td
-											style="cursor: default; text-align: center; font-weight: bold; padding-top: 17px">${loginInfo.nickName}<!-- 로그인하면 아이디값대입 지금은 임시로 board작성자 값 대입--></td>
-										<td><input id="contents" class="form-control"
-											name="contents" type="text"></td>
-										<td style="width: 25px;">
-											<button type='submit' class="btn btn-primary">등록</button>
 										</td>
-									</tr>
-								</form>
+                  </tr>
+											</c:if>
+											<c:if test="${board.writer != loginInfo.nickName}">
+                  <tr class="form-group" style="height:25px">			
+                   <td colspan="1"style="text-align: right; visibility: collapse">
+                         <button style="visibility: visible" type='button'
+                          class="btn btn-default" onclick="onList()">목록</button>			
+                   </td>
+                   </tr>
+                   </c:if>
 							</tbody>
 						</table>
+						</form>
+						<!-- 상세보기  -->
+						
+						
+						<!-- 댓글 리스트 -->
+						  <!-- 반복 -->
+             
+						   
+						    <table class = "table table-striped table-hover" width:"100%>
+						     <c:forEach var="comment" items="${list}">
+						     <form action='delcom.do?no=${comment.no}' method='post'>
+                  <tbody data-link="row" class="rowlink">
+                  <c:if test="${comment.b_no == board.no}">
+                  <tr>
+                   <td style ="cursor:default; width:150px; text-align: center; font-weight:bold">
+                   ${comment.writer }
+                   </td>
+                   <td style = "padding-left:20px;">
+                    ${comment.contents}
+                    </td>
+                    <td style = "text-align:center;">
+        
+                      <!-- 삭제버튼 내꺼면 뜸 -->
+                       <c:if test="${comment.writer == loginInfo.nickName}">
+                            <input style="display: none;" id="b_no" name='b_no' type='text' value="${comment.b_no}"></input>
+                            <input type='submit' value="X"/>
+                        </c:if>
+                   </tr>
+                  </c:if>
+                  </tbody>
+                   </form>
+                  </c:forEach>
+                </table>
+  
+  
+              
+              <!-- 반복끝 -->
+            <!-- 댓글 리스트 -->
+               
+               
+             <!-- 댓글 작성창 -->
+             <form class="form-horizontal" id="commentform" action="./addComment.do?no=${board.no}" method='post' onsubmit="return checkAddComment();">
+             <table class ="table table-striped table-hover" width="100%">
+              <tbody>
+              <tr>
+	             <td><div style="cursor: default; text-align: center; font-weight: bold; padding-top: 10px">${loginInfo.nickName}</div></td>
+	             <td><div style="cursor: default;"><input type="text" id="contents" class="form-control" name="contents" /></div></td>
+	             <td><div style="width: 25px; cursor: default"></div></td>
+	             <td><button type="submit" class="btn btn-primary" >등록</button></td>
+	            </tr>
+	            </tbody>
+	           </table>
+             </form>
+						
+						 <div class = "page_no" style = "width:100%; margin:0 auto; text-align:center; padding-top:15px;">
+						 <a href="view.do?no=${board.no}&pageNo=1" ><button>맨앞으로</button></a>
+             &nbsp;&nbsp;&nbsp;
+             
+             <c:if test="${pageNo > 4}">
+             <a href="view.do?no=${board.no}&pageNo=${pageNo - 4}">${pageNo - 4}</a>
+             </c:if>
+             &nbsp;
+             <c:if test="${pageNo > 3}">
+             <a href="view.do?no=${board.no}&pageNo=${pageNo - 3}">${pageNo - 3}</a>
+             </c:if>
+             &nbsp;
+             <c:if test="${pageNo > 2}">
+             <a href="view.do?no=${board.no}&pageNo=${pageNo - 2}">${pageNo - 2}</a>
+             </c:if>
+             &nbsp;
+             <c:if test="${pageNo > 1}">
+             <a href="view.do?no=${board.no}&pageNo=${pageNo - 1}">${pageNo - 1}</a>
+             </c:if>
+             
+             &nbsp;&nbsp;&nbsp;
+             - ${pageNo} -
+             &nbsp;&nbsp;&nbsp;
+      
+             <c:if test="${pageNo < totalPage}">
+             <a href="view.do?no=${board.no}&pageNo=${pageNo + 1}">${pageNo + 1}</a>
+             </c:if>
+             &nbsp;
+             <c:if test="${pageNo + 1 < totalPage}">
+             <a href="view.do?no=${board.no}&pageNo=${pageNo + 2}">${pageNo + 2}</a>
+             </c:if>
+             &nbsp;
+             <c:if test="${pageNo + 2 < totalPage}">
+             <a href="view.do?no=${board.no}&pageNo=${pageNo + 3}">${pageNo + 3}</a>
+             </c:if>
+             &nbsp;
+             <c:if test="${pageNo + 3 < totalPage}">
+             <a href="view.do?no=${board.no}&pageNo=${pageNo + 4}">${pageNo + 4}</a>
+             </c:if>
+             
+             &nbsp;&nbsp;&nbsp;
+             <a href="view.do?no=${board.no}&pageNo=${totalPage}"><button>맨뒤로</button></a>
+						</div>
+						
+					 <!-- 테이블이 있을 때 -->
 					</c:when>
+          
 					<c:otherwise>
+          <!-- 테이블이 없을 때 -->
 						<p>존재하지 않는 게시물입니다.</p>
 					</c:otherwise>
+					
 				</c:choose>
+				
+			<!-- board_view -->
 			</div>
+			
+	  <!-- container -->
 		</div>
 	</div>
 	<!-- 회원 정보 팝업창 -->
@@ -244,7 +350,7 @@ function readURL(input) {
 							<label for="info_password_after" class="col-sm-2 control-label">바꿀
 								비밀번호: </label>
 							<div class="col-sm-8">
-								<input id="info_password_after" name="password" type="password"
+								<input id="info_password_after" name="pas.sword" type="password"
 									class="form-control" value="" />
 							</div>
 						</div>
@@ -304,9 +410,10 @@ function readURL(input) {
 
 
 				</div>
+				
 				<div class="join_layer" style="display: none;">
 					<div class="pop-conts">
-						<!--content //-->
+						content //
 						<form class="form-horizontal" action="../member/signUp.do"
 							method="post" enctype="multipart/form-data"
 							onsubmit="return validate();">
@@ -357,11 +464,14 @@ function readURL(input) {
 						</form>
 					</div>
 				</div>
+				
+				
 			</div>
 		</div>
 	</div>
 </body>
 </html>
+
 <script type="text/javascript">
   function layer_open(el) {
 
@@ -398,8 +508,9 @@ function readURL(input) {
       e.preventDefault();
     });
   }
-</script>
-<script type="text/javascript">
+  
+  /*********************/
+  
 var checkedId = false;
 function checkId() {
   var id = $('#j_id').val();
@@ -459,31 +570,30 @@ function info_check() {
   return true;
 }
 
-</script>
-<script>
-   function onDelete(no){
-      location.href='delete.do?no='+no;
-   }
-   function onList(){
-       location.href='list.do';
-   }
-   function onUpdatePage(no){
-         location.href='goToUpdate.do?no='+no;
-   }
-   function delcom(no)
-   {
-     location.href='delcom.do?no='+no;
-   }
-   
-   var checkComments = false;
-   function checkAddComment() {
+/*********************/
 
-     if ($("#contents").val() == "") {
-       alert("댓글 내용을 입력해 주십시오");
-       checkComments = false;
-     } else
-    	 checkComments = true;
+function onDelete(no){
+   location.href='delete.do?no='+no;
+}
+function onList(){
+    location.href='list.do';
+}
+function onUpdatePage(no){
+      location.href='goToUpdate.do?no='+no;
+}
+function delcom(no)
+{
+  location.href='delcom.do?no='+no;
+}
 
-     return checkComments;
-   }
+var checkComments = false;
+function checkAddComment() {
+  if ($("#contents").val() == "") {
+    alert("댓글 내용을 입력해 주십시오");
+    checkComments = false;
+  } else
+ 	 checkComments = true;
+
+  return checkComments;
+}
 </script>
