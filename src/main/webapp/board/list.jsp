@@ -18,28 +18,7 @@
 	type="text/css">
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/board/jasny-bootstrap.min.js"></script>
-
-<style type="text/css">
-.main_btn {
-	border-radius: 60px;
-	-moz-border-radius: 60px;
-	-webkit-border-radius: 60px;
-	border: 3px solid #444444;
-}
-
-.board_list {
-	width: 800px;
-	margin: 0 auto;
-}
-
-#info_file {
-	display: none;
-}
-
-#info_img {
-	cursor: pointer;
-}
-</style>
+<script src="../js/board/list.js"></script>
 </head>
 
 <script>
@@ -63,19 +42,58 @@ $(document).ready(function() {
     $("#info_img").click(function() {
         $("input[id='info_file']").click();
       });
+    
+    $("#j_id").focus(function(){
+        $("#j_id").css('border', '1px solid #66afe9');  
+         $("#j_id").css('box-shadow', 'inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6)'); 
+        
+      });
+      $("#j_id").blur(function(){
+              var id = $('#j_id').val();
+             
+              $.ajax({
+              dataType: "json",
+              type: "POST",
+              url: "../member/check.do", //이페이지에서 중복체크를 한다
+              data: "id="+ id ,//test.asp에 id 값을 보낸다
+              cache: false,
+              success: function(obj){
+                if (id != "" && obj.result =="") {
+                    $("#j_id").css('box-shadow', 'none');
+                        $("#j_id").css('border', '2px solid green');
+                      checkedId = true;
+                      $("#check_label").hide("slow");
+                    } else if(id == ""){
+                      $("#j_id").css('box-shadow', 'inset 0 1px 1px rgba(0, 0, 0, .075)');  
+                       $("#j_id").css('border', '1px solid #ccc');             
+                       $("#check_label").hide("slow");
+                    }
+                
+                else {
+                      $("#j_id").css('box-shadow', 'none');
+                      $("#j_id").css('border', '2px solid tomato');
+                      $("#check_label").show("slow");
+                      //alert("이미 존재하는 아이디입니다.");
+                    }
+              }
+              });
+          });
+      $("#j_password_chk").blur(function(){
+        var pwd = $('#j_password').val();
+        var pwd_chk = $('#j_password_chk').val();
+        
+        if(pwd != pwd_chk)
+         $("#pwd_check_label").show("slow");
+        else
+          $("#pwd_check_label").hide("slow");
+      });
+      $("#j_img").click(function() {
+          $("input[id='j_file']").click();
+        });
 });
-function readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        document.getElementById('info_img').src = e.target.result;
-      }
-      reader.readAsDataURL(input.files[0]);
-    }
- }
 function check(src){
-	  
-	  
+    
+    
     var check = "<c:out value = "${loginInfo}"/>";
 
     if(check == "")
@@ -118,7 +136,7 @@ function check(src){
 					style="width: 80px; height: 80px"></a></span>
 		</div>
 		<div class="container">
-			<div class="board_list">
+			<div class="board_list" style = "width:60%; margin:0 auto;">
 				<div class="col-lg-12 text-center">
 					<h2 style="text-align: center">BOARD</h2>
 					<hr class="star-primary">
@@ -294,15 +312,13 @@ function check(src){
 							method="post">
 							<h1>LOGIN</h1>
 							<div class="form-group">
-								<label for="id" class="col-sm-2 control-label"> ID</label>
-								<div class="col-sm-10">
+								<div class="col-sm-12">
 									<input type="text" class="form-control" id="l_id" name="id"
 										placeholder="ID">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="password" class="col-sm-2 control-label">Password</label>
-								<div class="col-sm-10">
+								<div class="col-sm-12">
 									<input type="password" class="form-control" id="l_password"
 										name="password" placeholder="Password">
 								</div>
@@ -325,41 +341,44 @@ function check(src){
 							method="post" enctype="multipart/form-data"
 							onsubmit="return validate();">
 							<h1>JOIN</h1>
+							<div style = "text-align:center; padding-bottom:5px;">
+                <img id = "j_img" src="http://placehold.it/150x150" 
+                style = "width:150px; height:150px; border:1px solid #444;">
+                </div>
 							<div class="form-group">
-								<label for="file" class="col-sm-2 control-label">IMAGE</label>
-								<div class="col-sm-10">
-									<input id="j_file" class="form-control" name="file" type="file">
+								<div class="col-sm-12">
+									<input id="j_file" class="form-control" name="file" type="file" onchange="readURL_join(this);">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="id" class="col-sm-2 control-label">ID</label>
-								<div class="col-sm-10">
+								
+								<div class="col-sm-12">
 									<input type="text" class="form-control" id="j_id" name="id"
 										placeholder="ID">
-									<button type="button" onclick="checkId()">중복검사</button>
+									<div id = "check_label" style = "display:none;">이미 ID를 사용중입니다.</div>
 								</div>
 
 							</div>
 							<div class="form-group">
-								<label for="id" class="col-sm-2 control-label">NickName</label>
-								<div class="col-sm-10">
+								
+								<div class="col-sm-12">
 									<input type="text" class="form-control" id="j_nickname"
-										name="nickName" placeholder="ID">
+										name="nickName" placeholder="nickName">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="password" class="col-sm-2 control-label">Password</label>
-								<div class="col-sm-10">
+							
+								<div class="col-sm-12">
 									<input type="password" class="form-control" id="j_password"
 										name="password" placeholder="Password">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="password" class="col-sm-2 control-label">Check
-									Password</label>
-								<div class="col-sm-10">
+
+								<div class="col-sm-12">
 									<input type="password" class="form-control" id="j_password_chk"
 										name="password_chk" placeholder="Password check">
+								  <div id = "pwd_check_label" style = "display:none;">패스워드 확인이 다릅니다.</div>
 								</div>
 							</div>
 							<div style="text-align: left;">
@@ -388,7 +407,7 @@ function check(src){
 
     // 화면의 중앙에 레이어를 띄운다.
     if (temp.outerHeight() < $(document).height())
-      temp.css('margin-top', '-' + temp.outerHeight() / 2 + 'px');
+      temp.css('margin-top', '-' + $(document).height() / 3 + 'px');
     else
       temp.css('top', '0px');
     if (temp.outerWidth() < $(document).width())

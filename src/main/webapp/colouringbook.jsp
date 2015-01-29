@@ -24,73 +24,7 @@
 <!-- CUSTOM STYLE CSS -->
 <link href="../css/colouringbook/style.css" rel="stylesheet" />
 <style>
-.main_btn {
-	border-radius: 60px;
-	-moz-border-radius: 60px;
-	-webkit-border-radius: 60px;
-	border: 3px solid #444444;
-}
 
-.design_upload {
-	width: 100%;
-	height: 100%;
-	margin: 0 auto;
-}
-
-.design_upload #d_input_title {
-	width: 65%;
-	height: 50px;
-	margin: 0 auto;
-}
-
-.design_upload #d_input_title input[type=text] {
-	width: 80%;
-}
-
-.design_upload #d_input_img {
-	align: center;
-	width: 60%;
-	height: 100%;
-	margin: 0 auto;
-}
-
-#d_img {
-	border: 2px dotted tomato;
-	cursor: pointer;
-	margin: 0 auto;
-}
-
-#d_file {
-	display: none;
-}
-
-.d_btn {
-	padding-top: 20px;
-	width: 100%;
-	text-align: center;
-	margin: 0 auto;
-}
-
-.design_list {
-	width: 100%;
-	margin: 0 auto;
-}
-
-.tab3_content, .tab2_content, .tab1_content img {
-	cursor: pointer;
-}
-
-#info_file {
-	display: none;
-}
-
-#info_img {
-	cursor: pointer;
-}
-
-.hot_img {
-	border: 2px solid black;
-}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -240,7 +174,7 @@
 								</span>
 								<c:forEach var="hot" items="${hot}">
 									<img id="img_${hot.no}_h" src="../files/${hot.u}"
-										style="width: 250px; height: 250px; padding: 4px;">
+										style="width: 150px; height: 150px; padding: 4px;">
 									<div class="modal fade" id="img_${hot.no}_h_modal"
 										tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 										aria-hidden="true">
@@ -273,7 +207,7 @@
 							<div class="all_img" style="width: 100%; height:500px; overflow:auto; margin: 0 auto;">
 								<c:forEach var="shared" items="${list}">
 										<img id="img_${shared.no}" src="../files/${shared.u}"
-											style="width: 250px; height: 250px; padding: 4px;">
+											style="width: 150px; height: 150px; padding: 4px;">
 									<div class="modal fade" id="img_${shared.no}_modal"
 										tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 										aria-hidden="true">
@@ -306,11 +240,11 @@
 							</div>
 						</div>
 						<div class="tab2_content">
-							<div class="bookmark_img" style="width: 100%; height:8
+							<div class="basic_img" style="width: 100%; height:8
 							00px; overflow:auto; margin: 0 auto;">
 								<c:forEach var="admin" items="${admin}">
 									<img id="img_${admin.no}_a" src="../files/${admin.u}"
-										style="width: 250px; height: 250px; padding: 4px;">
+										style="width: 150px; height: 150px; padding: 4px;">
 									<div class="modal fade" id="img_${admin.no}_a_modal"
 										tabindex="-1" role="dialog" aria-labelledby="myModal2"
 										aria-hidden="true">
@@ -337,10 +271,10 @@
 							</div>
 						</div>
 						<div class="tab3_content">
-							<div class="bookmark_img" style="width: 100%; height:800px; overflow:auto; margin: 0 auto;">
+							<div class="bookmark_img" style="width: 100%; height:600px; overflow:auto; margin: 0 auto;">
 								<c:forEach var="bookmark" items="${bookmark}">
 									<img id="img_${bookmark.no}_b" src="../files/${bookmark.u}"
-										style="width: 250px; height: 250px; padding: 4px;">
+										style="width: 150px; height: 150px; padding: 4px;">
 									<div class="modal fade" id="img_${bookmark.no}_b_modal"
 										tabindex="-1" role="dialog" aria-labelledby="myModal3"
 										aria-hidden="true">
