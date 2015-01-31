@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ktds.cfs.dao.GallaryDao">
+<insert id="insert" parameterType="Gallary">
+insert into gallarys(g_url,g_writer) values(#{u},#{writer})
+</insert>
+<select id="selectList" resultType="Gallary">
+select g_no as no,g_url as u,g_writer as writer from gallarys
+</select>
+</mapper>
