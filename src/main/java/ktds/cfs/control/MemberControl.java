@@ -1,6 +1,7 @@
 package ktds.cfs.control;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -9,10 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import ktds.cfs.dao.FavoriteDao;
+import ktds.cfs.dao.GallaryDao;
 import ktds.cfs.dao.MemberDao;
 import ktds.cfs.dao.SharedDao;
+import ktds.cfs.domain.Gallary;
 import ktds.cfs.domain.Member;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +35,9 @@ public class MemberControl {
 
   @Autowired
   SharedDao sharedDao;
+  
+  @Autowired
+  GallaryDao gallaryDao;
 
   @Autowired
   ServletContext context;
@@ -62,13 +69,11 @@ public class MemberControl {
   public String modify(HttpServletRequest request,Member member, MultipartFile file, HttpSession session) {
     Member m = (Member) session.getAttribute("loginInfo");
     member.setNo(m.getNo());
-    // System.out.println("사용자 넘버" + m.getNo());
     String realPath = context.getRealPath("/files");
     String filename;
     
-   System.out.println(m.getPhoto());
     try {
-      //System.out.println("filename : " + filename + "realPath : " + realPath);
+ 
       if(member.getNickName().equals(""))
         member.setNickName(m.getNickName());
       if(member.getPassword().equals(""))
@@ -107,7 +112,6 @@ public class MemberControl {
     if (member != null) {
 
       session.setAttribute("loginInfo", member);
-      System.out.println("로그인 성공");
      
       return "redirect:"+ referer;
     } else {
@@ -120,8 +124,15 @@ public class MemberControl {
   @RequestMapping("/logout")
   public String logout(HttpServletRequest request,HttpSession session) {
     session.invalidate();
+    
     String referer = request.getHeader("Referer");
+    System.out.println(""+referer);
     return "redirect:"+ referer;
+  }
+  @RequestMapping("/logout_design")
+  public String logout_design(HttpServletRequest request,HttpSession session) {
+    session.invalidate();
+    return "redirect:../main.jsp";
   }
 
   @RequestMapping("/check")
@@ -146,6 +157,7 @@ public class MemberControl {
     model.addAttribute("list", l2);
     model.addAttribute("admin", l3);
     model.addAttribute("hot", l4);
+
     // session.setAttribute("colouringbook",model);
     return "/colouringbook.jsp";
 
@@ -180,6 +192,28 @@ public class MemberControl {
     return "/colouringbook.jsp";
 
   }
-
+  @RequestMapping(value = "/injung")
+  public String injung(String hidden, HttpServletRequest request, HttpSession session,Model model){
+    byte[] imageData = Base64.decodeBase64(hidden.substring(22));
+    Member m = (Member)session.getAttribute("loginInfo");
+    Gallary g = new Gallary();
+    String webAppPath = context.getRealPath("/files");
+    String fileName = "/pic_" + System.currentTimeMillis();
+    g.setU(fileName);
+    g.setWriter(m.getNickName());
+    gallaryDao.add(g);
+    File file = new File(webAppPath + fileName);
+    try(FileOutputStream out = new FileOutputStream(file)) {
+      out.write(imageData);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return "redirect:gallerylist.do";
+  }
+  @RequestMapping(value = "/gallerylist")
+  public String galleryList(HttpSession session,Model model){
+    model.addAttribute("gallery", gallaryDao.selectList());
+    return "../gallery/gallery.jsp";
+  }
 
 }

@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     b_no
     from comments
     where b_no = #{b_no}
+    order by c_no desc 
     limit #{startIndex}, #{pageSize}
   </select>
   

@@ -108,7 +108,29 @@ public class SharedDao {
      sqlSession2.close();
     }
   }
-
   
-
+  public String getImage(int no) {
+    SqlSession sqlSession2 = sqlSessionFactory.openSession();
+    try{
+      return sqlSession2.selectOne("ktds.cfs.dao.SharedDao.getimage", no);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }finally
+    {
+      sqlSession2.close();
+    }
+  }
+  public String getImage2(int no) {
+    SqlSession sqlSession2 = sqlSessionFactory.openSession();
+    try{
+      return sqlSession2.selectOne("ktds.cfs.dao.SharedDao.getimage2", no);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }finally
+    {
+      sqlSession2.close();
+    }
+  }
 }

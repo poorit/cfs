@@ -17,9 +17,7 @@ function readURL_join(input) {
       reader.readAsDataURL(input.files[0]);
     }
  }
-function check(src){
-	  
-	  
+function check(src){	  
     var check = "<c:out value = "${loginInfo}"/>";
 
     if(check == "")

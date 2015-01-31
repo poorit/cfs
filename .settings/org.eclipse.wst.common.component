@@ -5,6 +5,9 @@
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
 		<wb-resource deploy-path="/" source-path="src/main/webapp"/>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/bit/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.10/4b95f4897fa13f2cd904aee711aeafc0c5295cd8/commons-codec-1.10.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/bit/.gradle/caches/modules-2/files-2.1/org.springframework/spring-jdbc/4.1.4.RELEASE/d54f4a5f3e37cd505afbf731b06b9a1c4b564ec1/spring-jdbc-4.1.4.RELEASE.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>

@@ -50,6 +50,19 @@
 				$('#' + title + '_modal .modal-body').html('');
 			});
 		});
+		$('.basic_img img').on('click', function() {
+		      var src = $(this).attr('src');
+		      var img = '<img src="' + src + '" class="img-responsive"/>';
+		      var title = $(this).attr('id');
+		      
+		      $('#' + title + '_modal').modal();
+		      $('#' + title + '_modal').on('shown.bs.modal', function() {
+		        $('#' + title + '_modal .modal-body').html(img);
+		      });
+		      $('#' + title + '_modal').on('hidden.bs.modal', function() {
+		        $('#' + title + '_modal .modal-body').html('');
+		      });
+		    });
 		
 		$('.bookmark_img img').on('click', function() {
 			var src = $(this).attr('src');
@@ -132,7 +145,7 @@
 <body>
 	<div class="wrap">
 		<div class="menubar">
-			<span><a href="../main.jsp" class="btn-example"> <img
+			<span><a href="../main.do" class="btn-example"> <img
 					class="main_btn" src="../images/logo.png"
 					style="width: 80px; height: 80px">
 			</a></span> <span><a id="info_btn" href="#" class="btn-example"> <img
@@ -144,7 +157,7 @@
 			</a></span> <span><a href="../board/list.do" class="btn-example"> <img
 					class="main_btn" src="../images/board.png"
 					style="width: 80px; height: 80px">
-			</a></span> <span><a href="#" class="btn-example"
+			</a></span> <span><a href="../member/gallerylist.do" class="btn-example"
 				onclick="layer_open('layer2');return false;"> <img
 					class="main_btn" src="../images/gallery.png"
 					style="width: 80px; height: 80px"></a></span>
@@ -191,9 +204,11 @@
 																</div>
 															</div>
 															<a href="#" class="btn btn-info btn-lg btn-block"
-																onclick="bookmark(${hot.no})">즐겨찾기추가</a> <a
-																href="../mycanvas.html"
-																class="btn btn-info btn-lg btn-block">선택</a>
+																onclick="bookmark(${hot.no})">즐겨찾기추가</a>
+																<form method="post" action="../shared/paint2.do?no=${hot.no}">
+	                                <button type=submit
+	                                  class="btn btn-info btn-lg btn-block">선택</button>
+	                              </form>
 														</div>
 													</div>
 												</div>
@@ -224,9 +239,12 @@
 																</div>
 															</div>
 															<a href="#" class="btn btn-info btn-lg btn-block"
-																onclick="bookmark(${shared.no})">즐겨찾기추가</a> <a
-																href="../mycanvas.html"
-																class="btn btn-info btn-lg btn-block">선택</a>
+																onclick="bookmark(${shared.no})">즐겨찾기추가</a> 
+																<form method="post" action="../shared/paint2.do?no=${shared.no}">
+                                  <button type=submit
+                                    class="btn btn-info btn-lg btn-block">선택</button>
+                                </form>
+
 														</div>
 													</div>
 												</div>
@@ -255,8 +273,10 @@
 													<div class="panel panel-info active-plan-price">
 														<div id="d_title" class="panel-heading">${admin.title}</div>
 														<div class="panel-body">
-															<a href="../mycanvas.html"
-																class="btn btn-info btn-lg btn-block">선택</a>
+															<form method="post" action="../shared/paint.do?no=${admin.no}">
+                                <button type=submit
+                                  class="btn btn-info btn-lg btn-block">선택</button>
+                              </form>
 														</div>
 													</div>
 												</div>
@@ -288,8 +308,10 @@
 
 															<a href="#" class="btn btn-info btn-lg btn-block"
 																id="d_btn" onclick="bmdelete(${bookmark.no})">즐겨찾기삭제</a>
-															<a href="../mycanvas.html"
-																class="btn btn-info btn-lg btn-block">선택</a>
+															<form method="post" action="../shared/paint2.do?no=${bookmark.no}">
+                                  <button type=submit
+                                    class="btn btn-info btn-lg btn-block">선택</button>
+                                </form>
 														</div>
 													</div>
 												</div>
@@ -401,7 +423,7 @@
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-primary">변경하기</button>
 							<button type="button" class="btn btn-primary"
-								onClick="location.href = '../member/logout.do'">로그아웃</button>
+								onClick="location.href = '../member/logout_design.do'">로그아웃</button>
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">나가기</button>
 						</div>

@@ -111,8 +111,6 @@ public class BoardControl {
     Member member = (Member) session.getAttribute("loginInfo");
     comment.setWriter(member.getNickName());
     comment.setB_no(no);
-    System.out.println("no : "+no);
-    System.out.println("nick : " + comment.getWriter());
     commentDao.insert(comment);
     return "redirect:view.do?no="+no;
   }
@@ -127,7 +125,6 @@ public class BoardControl {
 
   @RequestMapping("/search")
   public String search(Model model, String criteria, String searchValue) {
-    System.out.println(criteria + ", " + searchValue);
     if (criteria.equals("제목")) {
       String s = "%" + searchValue + "%";
       model.addAttribute("titlelist", boardDao.searchTitle(s));

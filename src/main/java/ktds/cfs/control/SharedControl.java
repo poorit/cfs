@@ -13,6 +13,7 @@ import ktds.cfs.domain.Shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +26,24 @@ public class SharedControl {
   @Autowired
   ServletContext context;
   
+  @RequestMapping("/paint")
+  public String paint(Model model, int no, HttpSession session)
+  {
+    Member member = (Member)session.getAttribute("loginInfo");
+    model.addAttribute("paint", sharedDao.getImage(no));
+    model.addAttribute("writer",member.getNickName());
+    
+    return "redirect:../mycanvas.jsp";
+  }
+  @RequestMapping("/paint2")
+  public String paint2(Model model, int no, HttpSession session)
+  {
+    Member member = (Member)session.getAttribute("loginInfo");
+    model.addAttribute("paint", sharedDao.getImage2(no));
+    model.addAttribute("writer",member.getNickName());
+    
+    return "redirect:../mycanvas.jsp";
+  }
   
   @RequestMapping("/add")
   public String add(Shared shared,MultipartFile file,HttpSession session)
@@ -36,7 +55,6 @@ public class SharedControl {
       file.transferTo(new File(realPath + "/" + filename));
       shared.setU(filename);
       shared.setWriter(member.getNickName());
-      System.out.println(shared.getWriter());
     } catch (IllegalStateException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

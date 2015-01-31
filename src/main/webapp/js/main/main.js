@@ -38,6 +38,7 @@ function validate() {
 		alert("아이디 중복검사를 실행해주세요.");
 		return false;
 	}
+	alert("회원가입이 완료되었습니다.");
 	return true;
 }
 
@@ -60,6 +61,7 @@ function info_check() {
 		alert("바꿀 비밀번호와 비밀번호확인이 다릅니다.");
 		return false;
 	}
+	alert("수정이 완료되었습니다.");
 	return true;
 }
 

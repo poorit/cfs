@@ -107,7 +107,7 @@ function check(src){
 <body>
 	<div class="wrap">
 		<div class="menubar">
-			<span><a href="../main.jsp" class="btn-example"> <img
+			<span><a href="../main.do" class="btn-example"> <img
 					class="main_btn" src="../images/logo.png"
 					style="width: 80px; height: 80px"></a></span>
 			<c:choose>
@@ -130,8 +130,7 @@ function check(src){
 			</a></span> <span><a href="../board/list.do" class="btn-example"> <img
 					class="main_btn" src="../images/board.png"
 					style="width: 80px; height: 80px">
-			</a></span> <span><a href="#" class="btn-example"
-				onclick="layer_open('layer2');return false;"> <img
+			</a></span> <span><a href="../member/gallerylist.do" class="btn-example"> <img
 					class="main_btn" src="../images/gallery.png"
 					style="width: 80px; height: 80px"></a></span>
 		</div>

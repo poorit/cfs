@@ -24,6 +24,7 @@ repositories {
 }
 
 dependencies {
+    compile 'commons-codec:commons-codec:1.10'
     compile 'org.springframework:spring-jdbc:4.1.4.RELEASE'
     compile 'org.mybatis:mybatis-spring:1.2.2'
     compile 'org.springframework:spring-webmvc:4.1.4.RELEASE'

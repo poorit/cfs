@@ -3,14 +3,20 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ktds.cfs.dao.BoardDao">
-  <select id="selectList" resultType="Board">
+  <select id="selectList" parameterType="map" resultType="Board">
     select 
     b_no as no,
     b_title as title,
     b_writer as writer,
     b_count as count,
     b_date as createDate
-    from board order by b_no desc
+    from board
+    order by b_no desc 
+    limit #{startIndex}, #{pageSize}
+  </select>
+   
+  <select id = "totalCount" resultType = "int">
+    select count(b_no) from board
   </select>
   <select id="searchTitle" parameterType="map" resultType="Board">
     select 

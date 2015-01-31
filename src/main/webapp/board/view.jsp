@@ -142,7 +142,7 @@ function readURL_join(input) {
 <body>
 	<div class="wrap">
 		<div class="menubar">
-			<span><a href="../main.jsp" class="btn-example"> <img
+			<span><a href="../main.do" class="btn-example"> <img
 					class="main_btn" src="../images/logo.png"
 					style="width: 80px; height: 80px">
 			</a></span>

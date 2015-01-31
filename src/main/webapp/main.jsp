@@ -163,42 +163,17 @@ function check_book(){
 					</a></span> <span><a href="board/list.do" class="btn-example"> <img
 							class="main_btn" src="./images/board.png"
 							style="width: 100px; height: 100px"></a></span> <span><a
-						href="#" class="btn-example"> <img
+						href="./member/gallerylist.do" class="btn-example"> <img
 							class="main_btn" src="./images/gallery.png"
 							style="width: 100px; height: 100px"></a></span>
 				</div>
 				<div class="main_gallery">
 					<div class="slider5">
-						<div class="slide">
-							<img src="http://placehold.it/300x150&text=FooBar1">
-						</div>
-						<div class="slide">
-							<img src="http://placehold.it/300x150&text=FooBar2">
-						</div>
-						<div class="slide">
-							<img src="http://placehold.it/300x150&text=FooBar3">
-						</div>
-						<div class="slide">
-							<img src="http://placehold.it/300x150&text=FooBar4">
-						</div>
-						<div class="slide">
-							<img src="http://placehold.it/300x150&text=FooBar5">
-						</div>
-						<div class="slide">
-							<img src="http://placehold.it/300x150&text=FooBar6">
-						</div>
-						<div class="slide">
-							<img src="http://placehold.it/300x150&text=FooBar7">
-						</div>
-						<div class="slide">
-							<img src="http://placehold.it/300x150&text=FooBar8">
-						</div>
-						<div class="slide">
-							<img src="http://placehold.it/300x150&text=FooBar9">
-						</div>
-						<div class="slide">
-							<img src="http://placehold.it/300x150&text=FooBar10">
-						</div>
+					<c:forEach var="gallery" items="${gallery}">
+					<div class="slide" style = "height:200px;">
+              <a href = "member/gallerylist.do"><img src="files${gallery.u}" style = "height:100%; border:1px solid #444;"/></a>
+          </div>
+					</c:forEach>
 					</div>
 				</div>
 			</div>
